@@ -3,37 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>POST Request Form</title>
+    <title>URL Parameter Handling</title>
     <script>
-        async function sendPostRequest() {
-            const apiKey = 'NHni5rbdhKYQZjFxPMa45dQbaKmjX1NchNloCpUQK1aFXu0p1DUkgkhXzmvZ';
-            const url = 'https://google29.com';
-            const endpoint = 'https://www.urlday.com/api/v1/links';
-
-            try {
-                const response = await fetch(endpoint, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                        'Authorization': `Bearer ${apiKey}`
-                    },
-                    body: new URLSearchParams({
-                        'url': url
-                    })
-                });
-
-                const data = await response.json();
-                console.log('Response:', data);
-                alert('Request successful!');
-            } catch (error) {
-                console.error('Error:', error);
-                alert('Request failed.');
+        document.addEventListener("DOMContentLoaded", function() {
+            // Function to get URL parameter
+            function getUrlParameter(name) {
+                const urlParams = new URLSearchParams(window.location.search);
+                return urlParams.get(name);
             }
-        }
+
+            // Function to decode base64 string
+            function decodeBase64(str) {
+                try {
+                    return atob(str);
+                } catch (e) {
+                    console.error('Base64 decode error:', e);
+                    return null;
+                }
+            }
+
+            // Main function
+            function handleRequest() {
+                const id = getUrlParameter('id');
+                if (!id) {
+                    // Redirect if no id parameter
+                    window.location.href = 'https://www.google.com';
+                    return;
+                }
+
+                const decodedId = decodeBase64(id);
+                if (!decodedId) {
+                    console.error('Invalid base64 string.');
+                    return;
+                }
+
+                // Construct the URL with the decoded string
+                const requestUrl = `https://u.pcloud.link/publink/show?code=${encodedId}`;
+
+                // Make the GET request
+                fetch(requestUrl)
+                    .then(response => response.text())
+                    .then(text => {
+                        // Display the response text
+                        document.getElementById('response').textContent = text;
+                    })
+                    .catch(error => {
+                        console.error('Fetch error:', error);
+                    });
+            }
+
+            // Execute the main function
+            handleRequest();
+        });
     </script>
 </head>
 <body>
-    <h1>Send POST Request</h1>
-    <button onclick="sendPostRequest()">Send Request</button>
+    <h1>URL Parameter Handling</h1>
+    <pre id="response">Loading response...</pre>
 </body>
 </html>
