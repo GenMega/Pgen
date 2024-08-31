@@ -25,6 +25,7 @@
             // Main function
             function handleRequest() {
                 const id = getUrlParameter('id');
+                const outputElement = document.getElementById('output');
                 if (!id) {
                     // Redirect if no id parameter
                     window.location.href = 'https://www.google.com';
@@ -38,17 +39,21 @@
                 }
 
                 // Construct the URL with the decoded string
-                const requestUrl = `https://u.pcloud.link/publink/show?code=${encodedId}`;
+                const requestUrl = `https://u.pcloud.link/publink/show?code=${decodedId}`;
+
+                // Display the request URL
+                outputElement.innerHTML = `<strong>Request URL:</strong> <a href="${requestUrl}" target="_blank">${requestUrl}</a><br/><strong>Response:</strong>`;
 
                 // Make the GET request
                 fetch(requestUrl)
                     .then(response => response.text())
                     .then(text => {
                         // Display the response text
-                        document.getElementById('response').textContent = text;
+                        outputElement.innerHTML += `<pre>${text}</pre>`;
                     })
                     .catch(error => {
                         console.error('Fetch error:', error);
+                        outputElement.innerHTML += `<pre>Error fetching data.</pre>`;
                     });
             }
 
@@ -59,6 +64,6 @@
 </head>
 <body>
     <h1>URL Parameter Handling</h1>
-    <pre id="response">Loading response...</pre>
+    <div id="output">Loading...</div>
 </body>
 </html>
