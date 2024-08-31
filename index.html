@@ -44,17 +44,22 @@
                 // Display the request URL
                 outputElement.innerHTML = `<strong>Request URL:</strong> <a href="${requestUrl}" target="_blank">${requestUrl}</a><br/><strong>Response:</strong>`;
 
-                // Make the GET request
-                fetch(requestUrl)
-                    .then(response => response.text())
-                    .then(text => {
-                        // Display the response text
-                        outputElement.innerHTML += `<pre>${text}</pre>`;
-                    })
-                    .catch(error => {
-                        console.error('Fetch error:', error);
-                        outputElement.innerHTML += `<pre>Error fetching data.</pre>`;
-                    });
+                // Make the GET request using fetch with custom User-Agent
+                fetch(requestUrl, {
+                    method: 'GET',
+                    headers: {
+                        'User-Agent': 'Mozilla/5.0 (Linux; Android 10; Mobile) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.75 Mobile Safari/537.36'
+                    }
+                })
+                .then(response => response.text())
+                .then(text => {
+                    // Display the response text
+                    outputElement.innerHTML += `<pre>${text}</pre>`;
+                })
+                .catch(error => {
+                    console.error('Fetch error:', error);
+                    outputElement.innerHTML += `<pre>Error fetching data.</pre>`;
+                });
             }
 
             // Execute the main function
