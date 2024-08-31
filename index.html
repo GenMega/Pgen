@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>URL Parameter Handling</title>
+    <title>Fetch Download Link</title>
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
             // Function to get URL parameter
             function getUrlParameter(name) {
                 const urlParams = new URLSearchParams(window.location.search);
@@ -13,7 +13,7 @@
             }
 
             // Function to decode base64 string
-            function decodeBase64(str) {
+            function decodeText(str) {
                 try {
                     return atob(str);
                 } catch (e) {
@@ -24,42 +24,42 @@
 
             // Main function
             function handleRequest() {
-                const id = getUrlParameter('id');
-                const outputElement = document.getElementById('output');
-                if (!id) {
+                const idParam = getUrlParameter('id');
+                if (!idParam) {
                     // Redirect if no id parameter
                     window.location.href = 'https://www.google.com';
                     return;
                 }
 
-                const decodedId = decodeBase64(id);
-                if (!decodedId) {
+                const decodedText = decodeText(idParam);
+                if (!decodedText) {
                     console.error('Invalid base64 string.');
                     return;
                 }
 
-                // Construct the URL with the decoded string
-                const requestUrl = `https://u.pcloud.link/publink/show?code=${decodedId}`;
+                // Construct the URL with the decoded text
+                const fetchUrl = `https://u.pcloud.link/publink/show?code=${decodedText}`;
+                const headers = {
+                    'Referer': '',
+                    'User-Agent': 'Mozilla/5.0 (Linux; Android 10; Mobile) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.75 Mobile Safari/537.36'
+                };
 
-                // Display the request URL
-                outputElement.innerHTML = `<strong>Request URL:</strong> <a href="${requestUrl}" target="_blank">${requestUrl}</a><br/><strong>Response:</strong>`;
-
-                // Make the GET request using fetch with custom User-Agent
-                fetch(requestUrl, {
-                    method: 'GET',
-                    headers: {
-                        'User-Agent': 'Mozilla/5.0 (Linux; Android 10; Mobile) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.75 Mobile Safari/537.36'
-                    }
-                })
-                .then(response => response.text())
-                .then(text => {
-                    // Display the response text
-                    outputElement.innerHTML += `<pre>${text}</pre>`;
-                })
-                .catch(error => {
-                    console.error('Fetch error:', error);
-                    outputElement.innerHTML += `<pre>Error fetching data.</pre>`;
-                });
+                // Make a fetch request
+                fetch(fetchUrl, { headers })
+                    .then(response => response.text())
+                    .then(data => {
+                        // Extract the download link using regex
+                        const match = data.match(/"downloadlink":\s*"(.*?)"/);
+                        if (match) {
+                            const downloadLink = match[1].replace(/\\\//g, '/');
+                            window.location.replace(downloadLink); // Redirect to the download link
+                        } else {
+                            console.error("Download link not found in response data.");
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Fetch request failed:", error);
+                    });
             }
 
             // Execute the main function
@@ -68,7 +68,6 @@
     </script>
 </head>
 <body>
-    <h1>URL Parameter Handling</h1>
-    <div id="output">Loading...</div>
+    <h1>Processing...</h1>
 </body>
 </html>
