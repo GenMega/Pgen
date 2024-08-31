@@ -4,135 +4,81 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pcloud Gen</title>
-    <style>
-        body {
-            background-color: black;
-            font-family: Arial, sans-serif;
-        }
-
-        .container {
-            width: 80%;
-            max-width: 400px;
-            margin: 40px auto;
-            padding: 20px;
-            background: rgba(0, 0, 0, 0.5);
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            border-radius: 10px;
-        }
-
-        .neon {
-            text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #03A9F4, 0 0 40px #03A9F4, 0 0 50px #03A9F4;
-            color: #03A9F4;
-            animation: glow 5s infinite;
-        }
-
-        @keyframes glow {
-            0% {
-                text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #03A9F4, 0 0 40px #03A9F4, 0 0 50px #03A9F4;
-            }
-            50% {
-                text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #007ac1, 0 0 40px #007ac1, 0 0 50px #007ac1;
-            }
-            100% {
-                text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #03A9F4, 0 0 40px #03A9F4, 0 0 50px #03A9F4;
-            }
-        }
-
-        input, button {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: none;
-            border-radius: 5px;
-            background-color: #333;
-            color: white;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        }
-
-        input:focus, button:focus {
-            outline: none;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5), 0 0 20px #03A9F4;
-        }
-
-        button {
-            background-color: #03A9F4;
-            color: white;
-            cursor: pointer;
-            animation: button-glow 5s infinite;
-        }
-
-        @keyframes button-glow {
-            0% {
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.5), 0 0 20px #03A9F4;
-            }
-            50% {
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.5), 0 0 20px #007ac1;
-            }
-            100% {
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.5), 0 0 20px #03A9F4;
-            }
-        }
-
-        button:hover {
-            background-color: #007ac1;
-        }
-
-        h1 {
-            color: #03A9F4;
-            margin-bottom: 20px;
-            text-align: center;
-            animation: title-glow 5s infinite;
-        }
-
-        @keyframes title-glow {
-            0% {
-                text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #03A9F4, 0 0 40px #03A9F4, 0 0 50px #03A9F4;
-            }
-            50% {
-                text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #007ac1, 0 0 40px #007ac1, 0 0 50px #007ac1;
-            }
-            100% {
-                text-shadow:             0 0 10px #fff, 0 0 20px #fff, 0 0 30px #03A9F4, 0 0 40px #03A9F4, 0 0 50px #03A9F4;
-            }
-        }
-
-        ::placeholder {
-            color: #03A9F4;
-            text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #03A9F4, 0 0 40px #03A9F4, 0 0 50px #03A9F4;
-            animation: placeholder-glow 5s infinite;
-        }
-
-        @keyframes placeholder-glow {
-            0% {
-                text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #03A9F4, 0 0 40px #03A9F4, 0 0 50px #03A9F4;
-            }
-            50% {
-                text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #007ac1, 0 0 40px #007ac1, 0 0 50px #007ac1;
-            }
-            100% {
-                text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #03A9F4, 0 0 40px #03A9F4, 0 0 50px #03A9F4;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="https://genmega.github.io/Pgen/main.css">
 </head>
 <body>
     <div class="container">
-        <h1 class="neon">Pcloud Gen</h1>
-        <input type="text" id="url" placeholder="URL" class="neon">
-        <input type="password" id="password" placeholder="Password" class="neon">
-        <button id="generateBtn" class="neon">Generate</button>
-        <button id="getPasswordBtn" class="neon">Get Password</button>
+        <h1>Pcloud Gen</h1>
+        <div class="input-group">
+            <input type="text" id="url" placeholder="URL">
+        </div>
+        <div class="input-group">
+            <input type="password" id="password" placeholder="Password">
+        </div>
+        <button id="generateBtn">Generate</button>
+        <button id="getPasswordBtn">Get Password</button>
+        <div id="message"></div>
+        <button id="copyBtn">Copy URL</button>
     </div>
 
+    <footer>
+        <p>Designed and developed by Mak 2024</p>
+    </footer>
+
     <script>
+        const validPassword = 'MAK';
+        const urlPattern = /^https:\/\/u\.pcloud\.link\/publink\/show\?code=[\w]+(?:#returl=https%3A\/\/u\.pcloud\.link\/publink\/show%3Fcode%3D[\w]+)?(?:&page=login)?$/;
+
         document.getElementById('generateBtn').addEventListener('click', function() {
-            // Logic to generate password goes here
-            alert('Password generation logic not implemented.');
+            const url = document.getElementById('url').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const messageElement = document.getElementById('message');
+            const copyBtn = document.getElementById('copyBtn');
+
+            if (password !== validPassword) {
+                messageElement.innerHTML = '<div class="error-message">Incorrect password.</div>';
+                copyBtn.style.display = 'none';
+                return;
+            }
+
+            if (!urlPattern.test(url)) {
+                messageElement.innerHTML = '<div class="error-message">Invalid URL format.</div>';
+                copyBtn.style.display = 'none';
+                return;
+            }
+
+            // Extract the code from the URL
+            const urlParams = new URLSearchParams(new URL(url).search);
+            const code = urlParams.get('code');
+
+            if (code) {
+                // Encode the code with Base64
+                const base64Code = btoa(code);
+                // Construct the new URL
+                const resultUrl = `https://genmega.github.io/Pgen/d.html?id=${base64Code}`;
+                
+                messageElement.innerHTML = `
+                    <div class="result-message">Generated URL: <a href="${resultUrl}" target="_blank" style="color: #4caf50;">${resultUrl}</a></div>
+                `;
+                
+                // Show copy button
+                copyBtn.style.display = 'block';
+                copyBtn.onclick = function() {
+                    navigator.clipboard.writeText(resultUrl).then(() => {
+                        alert('URL copied to clipboard!');
+                    }).catch(err => {
+                        alert('Failed to copy URL.');
+                    });
+                };
+            } else {
+                messageElement.innerHTML = '<div class="error-message">Unable to extract the code from the URL.</div>';
+                copyBtn.style.display = 'none';
+            }
         });
 
         document.getElementById('getPasswordBtn').addEventListener('click', function() {
-            // Logic to retrieve password goes here
-            alert('Password retrieval logic not implemented.');
+            // Redirect to Google
+            window.location.href = 'https://google.com';
         });
     </script>
 </body>
