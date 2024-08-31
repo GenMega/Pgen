@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Theme Password Generator</title>
+    <style>
+        body {
+            background-color: black;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            width: 300px;
+            margin: auto;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        input {
+            background-color: #333;
+            color: white;
+        }
+
+        button {
+            background-color: #03A9F4; /* Neon blue */
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #007ac1; /* Darker neon blue on hover */
+        }
+
+        h1 {
+            color: #03A9F4; /* Neon blue */
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Neon Theme Password Generator</h1>
+        <input type="text" id="url" placeholder="URL">
+        <input type="password" id="password" placeholder="Password">
+        <button id="generateBtn">Generate</button>
+        <button id="getPasswordBtn">Get Password</button>
+    </div>
+
+    <script>
+        document.getElementById('generateBtn').addEventListener('click', function() {
+            // Logic to generate password goes here
+            alert('Password generation logic not implemented.');
+        });
+
+        document.getElementById('getPasswordBtn').addEventListener('click', function() {
+            // Logic to retrieve password goes here
+            alert('Password retrieval logic not implemented.');
+        });
+    </script>
+</body>
+</html>
