@@ -3,32 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>POST Request Example</title>
+    <title>POST Request Form</title>
     <script>
         async function sendPostRequest() {
-            const url = 'https://dr-api.encurtador.dev/encurtamentos';
-            const data = { "url": "https://make.com" };
+            const apiKey = 'NHni5rbdhKYQZjFxPMa45dQbaKmjX1NchNloCpUQK1aFXu0p1DUkgkhXzmvZ';
+            const url = 'https://google29.com';
+            const endpoint = 'https://www.urlday.com/api/v1/links';
 
             try {
-                const response = await fetch(url, {
+                const response = await fetch(endpoint, {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'Authorization': `Bearer ${apiKey}`
                     },
-                    body: JSON.stringify(data)
+                    body: new URLSearchParams({
+                        'url': url
+                    })
                 });
 
-                const result = await response.json();
-                document.getElementById('response').textContent = JSON.stringify(result, null, 2);
+                const data = await response.json();
+                console.log('Response:', data);
+                alert('Request successful!');
             } catch (error) {
-                document.getElementById('response').textContent = 'Error: ' + error.message;
+                console.error('Error:', error);
+                alert('Request failed.');
             }
         }
     </script>
 </head>
 <body>
-    <h1>POST Request Example</h1>
-    <button onclick="sendPostRequest()">Send POST Request</button>
-    <pre id="response"></pre>
+    <h1>Send POST Request</h1>
+    <button onclick="sendPostRequest()">Send Request</button>
 </body>
 </html>
