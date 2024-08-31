@@ -2,72 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fetch Download Link</title>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            // Function to get URL parameter
-            function getUrlParameter(name) {
-                const urlParams = new URLSearchParams(window.location.search);
-                return urlParams.get(name);
-            }
-
-            // Function to decode base64 string
-            function decodeText(str) {
-                try {
-                    return atob(str);
-                } catch (e) {
-                    console.error('Base64 decode error:', e);
-                    return null;
-                }
-            }
-
-            // Main function
-            function handleRequest() {
-                const idParam = getUrlParameter('id');
-                if (!idParam) {
-                    // Redirect if no id parameter
-                    window.location.href = 'https://www.google.com';
-                    return;
-                }
-
-                const decodedText = decodeText(idParam);
-                if (!decodedText) {
-                    console.error('Invalid base64 string.');
-                    return;
-                }
-
-                // Construct the URL with the decoded text
-                const fetchUrl = `https://u.pcloud.link/publink/show?code=${decodedText}`;
-                const headers = {
-                    'Referer': '',
-                    'User-Agent': 'Mozilla/5.0 (Linux; Android 10; Mobile) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.75 Mobile Safari/537.36'
-                };
-
-                // Make a fetch request
-                fetch(fetchUrl, { headers })
-                    .then(response => response.text())
-                    .then(data => {
-                        // Extract the download link using regex
-                        const match = data.match(/"downloadlink":\s*"(.*?)"/);
-                        if (match) {
-                            const downloadLink = match[1].replace(/\\\//g, '/');
-                            window.location.replace(downloadLink); // Redirect to the download link
-                        } else {
-                            console.error("Download link not found in response data.");
-                        }
-                    })
-                    .catch(error => {
-                        console.error("Fetch request failed:", error);
-                    });
-            }
-
-            // Execute the main function
-            handleRequest();
-        });
-    </script>
+    <title>Simple HTML Page</title>
 </head>
 <body>
-    <h1>Processing...</h1>
+    <h1>Welcome to My Simple HTML Page</h1>
+    <p>This is a paragraph of text. HTML is easy to learn!</p>
+    <button id="myButton">Click Me</button>
+    <a href="https://www.example.com">Visit Example.com</a>
+
+    <!-- Link to the JavaScript file -->
+    <script src="starter.js"></script>
 </body>
 </html>
