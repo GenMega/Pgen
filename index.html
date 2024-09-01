@@ -36,7 +36,7 @@
             const copyBtn = document.getElementById('copyBtn');
 
             if (password !== validPassword) {
-                messageElement.innerHTML = '<div class="error-message">Incorrect password.</div>';
+                messageElement.innerHTML = '<div class="error-message">Incorrect password, please go to telegram for password</div>';
                 copyBtn.style.display = 'none';
                 return;
             }
@@ -71,14 +71,14 @@
                     });
                 };
             } else {
-                messageElement.innerHTML = '<div class="error-message">Unable to extract the code from the URL.</div>';
+                messageElement.innerHTML = '<div class="error-message">Unable to get data from the URL.</div>';
                 copyBtn.style.display = 'none';
             }
         });
 
         document.getElementById('getPasswordBtn').addEventListener('click', function() {
             // Redirect to Google
-            window.location.href = 'https://google.com';
+            window.location.href = 'https://t.me/pcloudgen';
         });
     </script>
 </body>
